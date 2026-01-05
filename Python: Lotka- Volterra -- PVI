@@ -1,0 +1,41 @@
+#@title Python: Lotka- Volterra -- PVI
+import numpy as np
+import matplotlib.pyplot as plt
+
+#parámetros del Lotka-Volterra
+alpha = 0.25
+beta = 1.0
+gamma = 0.01
+delta = 0.01
+
+#Intervalo de tiempo y pasos
+t0 = 0.0
+tf = 200.0
+h = 0.01
+N = int(np.ceil((tf-t0)/h))
+
+#PVI: condiciones iniciales
+x0 = 80.0
+y0 = 30.0
+
+#Sistema de EDO
+def f_sistema(x,y):
+dx = -alpha * x + gamma * x * y
+dy = beta * y - delta * x * y
+return dx,dy
+
+plt.figure(figsize=(6,6))
+plt.plot(x, y, '-', linewidth=1)
+plt.plot(x0, y0, 'go', label='Condicion inicial') # marcar el punto de equilibrio E*
+x_star = beta / delta
+y_star = alpha / gamma
+plt.plot(x_star, y_star, 'b*', markersize=10, label=f'Equilibrio E* ({x_star:.0f},{y_star:.0f})')
+plt.xlabel('Predadores x')
+plt.ylabel('Presas y')
+plt.title('Diagrama fase: y vs x (Euler explícito)')
+plt.legend()
+plt.grid(True)
+plt.axis('equal') # para apreciar órbitas circulares/elongadas
+plt.tight_layout()
+plt.show()
+
